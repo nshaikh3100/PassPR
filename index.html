@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Surprise for Zikra... 💌</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* --- MOBILE FIRST STYLING --- */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); /* Clean, light paper look */
+            overflow: hidden;
+            color: #333;
+        }
+
+        /* Animated Background Blobs */
+        .blob {
+            position: absolute;
+            filter: blur(50px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 300px; height: 300px; background: #ff9a9e; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+        .blob-2 { bottom: -10%; right: -10%; width: 250px; height: 250px; background: #a18cd1; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(20px, 40px) rotate(10deg); }
+        }
+
+        /* --- CARD CONTAINER --- */
+        .card-container {
+            width: 85%;
+            max-width: 350px;
+            height: 500px;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.6s;
+            backface-visibility: hidden;
+        }
+
+        /* Card States */
+        .card.active { transform: translateX(0) scale(1); opacity: 1; z-index: 5; }
+        .card.next { transform: translateX(0) scale(0.9) translateY(20px); opacity: 0.5; z-index: 4; }
+        .card.gone { transform: translateX(-150%) rotate(-20deg); opacity: 0; z-index: 0; }
+
+        /* Typography */
+        h1 { font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #ff6b6b; margin-bottom: 10px; }
+        p { font-size: 1.1rem; line-height: 1.6; color: #666; margin-bottom: 30px; }
+        .emoji { font-size: 4rem; margin-bottom: 20px; animation: bounce 2s infinite; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Buttons */
+        .btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+            transition: transform 0.2s;
+        }
+        .btn:active { transform: scale(0.95); }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+            margin-top: 10px;
+        }
+
+        /* Password Box */
+        .password-reveal {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: #333;
+            margin-bottom: 20px;
+            border: 2px dashed #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="card-container">
+        
+        <div class="card active" id="card1">
+            <div class="emoji">💌</div>
+            <h1>Hi Zikra!</h1>
+            <p>I have made something special just for you.<br>But first, we need to make sure it's really you...</p>
+            <button class="btn" onclick="nextCard(1)">I'm ready!</button>
+        </div>
+
+        <div class="card next" id="card2">
+            <div class="emoji">🤔</div>
+            <h1>Hint #1</h1>
+            <p>To open your gift, you will need a <strong>secret password</strong>.</p>
+            <p>Are you ready to guess what it is?</p>
+            <button class="btn" onclick="nextCard(2)">Give me a clue</button>
+        </div>
+
+        <div class="card" id="card3">
+            <div class="emoji">🌹</div>
+            <h1>Hint #2</h1>
+            <p>The password is the birthday of the person with whom i am going to spend the rest of my life...</p>
+            <p><i>(Or maybe my Wifey's Birthday?)</i></p>
+            <button class="btn" onclick="nextCard(3)">Reveal Password</button>
+        </div>
+
+        <div class="card" id="card4">
+            <div class="emoji">🎁</div>
+            <h1>The Password is:</h1>
+            
+            <div class="password-reveal">130802</div>
+            
+            <p>Remember this! You will need it on the next screen.</p>
+            
+            <a href="index.html" style="text-decoration: none;">
+                <button class="btn">See you soon ❤️</button>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        function nextCard(currentCardIndex) {
+            const current = document.getElementById(`card${currentCardIndex}`);
+            const next = document.getElementById(`card${currentCardIndex + 1}`);
+
+            if (current && next) {
+                // Swipe current card away
+                current.classList.remove('active');
+                current.classList.add('gone');
+
+                // Bring next card into focus
+                next.classList.remove('next');
+                next.classList.add('active');
+
+                // Prepare the card AFTER the next one (if exists)
+                const following = document.getElementById(`card${currentCardIndex + 2}`);
+                if (following) {
+                    following.classList.add('next');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
